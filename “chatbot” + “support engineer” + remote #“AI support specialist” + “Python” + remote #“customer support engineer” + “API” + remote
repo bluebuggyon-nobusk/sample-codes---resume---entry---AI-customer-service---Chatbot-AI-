@@ -1,0 +1,105 @@
+# “chatbot” + “support engineer” + remote
+#“AI support specialist” + “Python” + remote
+#“customer support engineer” + “API” + remote
+
+#freelance for hire >>>> rck43.thehammer@gmail.com > RCK . Ryan King. DBA - Ryan King. freelance and gig work. 
+## Entry-level Python developer focused on practical scripting and simple automation. Building small tools for healthcare metrics,
+#irrigation water estimation, lab data utilities, and basic chatbot-style support. Comfortable with Python functions,
+##command-line scripts, and documenting code. Actively expanding my GitHub portfolio and interested in AI chatbot support and automation technician roles. ##
+
+########################
+
+"""
+simple_support_bot.py
+
+A tiny example of a rule-based support chatbot.
+Good for an entry-level portfolio:
+- shows clean Python functions
+- basic text handling
+- simple routing based on user intent
+"""
+# In terminal / Command Prompt, go to the folder with the file.
+# Run: python simple_support_bot.py
+# Type messages like:
+# hi
+# I have a billing question
+# I see an error on the screen
+# Then try quit to exit.
+
+
+def normalize_text(text):
+    """Return a lowercase, stripped version of the text."""
+    return text.strip().lower()
+
+
+def detect_intent(message):
+    """
+    Very simple intent detector based on keywords.
+    In real systems this would be ML/NLP.
+    """
+    msg = normalize_text(message)
+
+    if "password" in msg or "login" in msg:
+        return "account_help"
+    if "error" in msg or "bug" in msg or "doesn't work" in msg:
+        return "bug_report"
+    if "billing" in msg or "charge" in msg or "invoice" in msg:
+        return "billing"
+    if "hello" in msg or "hi" in msg:
+        return "greeting"
+
+    return "fallback"
+
+
+def generate_response(intent):
+    """
+    Map simple intents to canned responses.
+    In a real chatbot this might call an LLM or a response database.
+    """
+    if intent == "account_help":
+        return (
+            "I can help with account access. "
+            "Have you tried resetting your password from the login screen?"
+        )
+    if intent == "bug_report":
+        return (
+            "Thanks for reporting an issue. "
+            "Please describe what you were doing when the error happened."
+        )
+    if intent == "billing":
+        return (
+            "For billing questions, I can help check recent invoices "
+            "and payment methods associated with your account."
+        )
+    if intent == "greeting":
+        return "Hi there! How can I help you today?"
+
+    return (
+        "I'm not sure I understand yet, but I'm learning. "
+        "Could you rephrase or give a bit more detail?"
+    )
+
+
+def handle_message(user_message):
+    """
+    Full flow:
+    - detect the intent
+    - generate a response
+    - return the response text
+    """
+    intent = detect_intent(user_message)
+    response = generate_response(intent)
+    return response
+
+
+if __name__ == "__main__":
+    print("Simple Support Bot (type 'quit' to exit)\n")
+
+    while True:
+        user_input = input("You: ")
+        if user_input.strip().lower() in {"quit", "exit"}:
+            print("Bot: Goodbye!")
+            break
+
+        bot_reply = handle_message(user_input)
+        print("Bot:", bot_reply)
